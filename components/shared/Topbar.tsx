@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { SignedIn, SignOutButton, UserButton } from '@clerk/nextjs'
+import { SignedIn, SignOutButton, UserButton, SignInButton, SignedOut } from '@clerk/nextjs'
 
 
 const Topbar = () => {
@@ -15,7 +15,6 @@ const Topbar = () => {
 
       <div className='flex items-center gap-1'>
         <div className='block md:hidden'>
-
           <SignedIn>
             <SignOutButton>
               <div className='flex cursor-pointer'>
@@ -30,7 +29,22 @@ const Topbar = () => {
           </SignedIn>
         </div>
 
-        <div className="head-text text-left ">
+        <SignedOut>
+          <div className="head-text text-left block md:hidden ">
+            <SignInButton>
+              <div className='flex cursor-pointer'>
+                <Image
+                  src='/assets/logout.svg'
+                  alt='logout'
+                  width={24}
+                  height={24}
+                />
+              </div>
+            </SignInButton>
+          </div>
+        </SignedOut>
+
+        <div className="head-text text-left  ">
           <UserButton afterSignOutUrl="/" />
         </div>
 
