@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { SignedIn, SignOutButton, UserButton, SignInButton, SignedOut } from '@clerk/nextjs'
+import Editprofile from '../cards/Editprofile'
 
+
+import { SignedIn, SignOutButton, UserButton, SignInButton, SignedOut } from '@clerk/nextjs'
 
 const Topbar = () => {
   return (
@@ -14,6 +16,9 @@ const Topbar = () => {
       </Link>
 
       <div className='flex items-center gap-1'>
+        <Link href='/onboarding' className='flex text-bold text-white px-2'>
+          <Editprofile/>
+        </Link>
         <div className='block md:hidden'>
           <SignedIn>
             <SignOutButton>
