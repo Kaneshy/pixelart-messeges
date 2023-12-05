@@ -3,7 +3,7 @@ import { sidebarLinks } from '@/constants'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
-import { SignedIn, SignOutButton, SignedOut, SignInButton } from '@clerk/nextjs'
+import { SignedIn, SignOutButton, SignedOut, SignInButton, useAuth } from '@clerk/nextjs'
 
 
 
@@ -11,6 +11,7 @@ const LeftSidebar = () => {
 
   const router = useRouter()
   const pathname = usePathname()
+  const { userId } = useAuth();
 
   return (
     <section className="custom-scrollbar leftsidebar">
@@ -19,6 +20,9 @@ const LeftSidebar = () => {
           // link.route is in constants index.js 
           // link.route.length > 1 = no estamos en home page || alt 124
           const isActive = (pathname.includes(link.route) && link.route.length > 1) || pathname === link.route
+
+          if (link.route === "/profile") link.route = `${link.route}/${userId}`;
+
           return (
             <Link
               href={link.route}

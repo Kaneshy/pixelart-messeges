@@ -16,7 +16,7 @@ const Topbar = () => {
       </Link>
 
       <div className='flex items-center gap-1'>
-        <Link href='/onboarding' className='flex text-bold text-white px-2'>
+        <Link href='/profile/edit' className='flex text-bold text-white px-2'>
           <Editprofile/>
         </Link>
         <div className='block md:hidden'>
