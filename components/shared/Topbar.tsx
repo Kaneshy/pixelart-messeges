@@ -11,8 +11,8 @@ const Topbar = () => {
       <Link
         href='/'
         className='flex items-center gap-4'>
-        <Image src='/assets/logo.svg' alt='logo' width={28} height={28} />
-        <p className='text-heading3-bold text-light-1 max-xs:hidden'>Pixelart Messeges</p>
+        <Image src='/assets/favicon.ico' alt='logo' width={28} height={28} />
+        <p className='text-heading3-bold text-light-1 max-xs:hidden'>Social Pixel</p>
       </Link>
 
       <div className='flex items-center gap-1'>

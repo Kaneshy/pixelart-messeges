@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer components {
+
   /* main */
   .main-container {
     @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
@@ -121,9 +122,7 @@
   @apply max-sm:hidden;
 }
 
-.cl-organizationSwitcherTrigger
-  .cl-organizationPreview
-  .cl-organizationPreviewTextContainer {
+.cl-organizationSwitcherTrigger .cl-organizationPreview .cl-organizationPreviewTextContainer {
   @apply max-sm:hidden;
 }
 
@@ -159,3 +158,23 @@
 .comment-form_btn {
   @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
 }
+
+
+  .OWNBAR::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Track */
+  .OWNBAR::-webkit-scrollbar-track {
+    background: #29222e;
+  }
+
+  /* Handle */
+  .OWNBAR::-webkit-scrollbar-thumb {
+    background: #877eff;
+  }
+
+  /* Handle on hover */
+  .OWNBAR::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

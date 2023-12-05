@@ -16,7 +16,7 @@ interface Props {
 function DeleteThread({
   threadId,
   currentUserId,
-//   authorId,
+  authorId,
   parentId,
   isComment,
 }: Props) {

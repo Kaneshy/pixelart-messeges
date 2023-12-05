@@ -41,11 +41,18 @@ function ThreadCard({
 }: Props) {
 
   console.log('oso', author)
+  const createdAtDate = new Date(createdAt);
+  const year = createdAtDate.getFullYear();
+  const month = createdAtDate.getMonth() + 1; // Adding 1 as getMonth() returns a zero-based index
+  const day = createdAtDate.getDate();
+  const hour = createdAtDate.getHours();
+  const minutes = createdAtDate.getMinutes();
+
+  
   return (
     <article
-      className={`flex w-full flex-col rounded-xl ${
-        isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
-      }`}
+      className={`flex w-full flex-col rounded-xl ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
+        }`}
     >
       <div className='flex items-start justify-between'>
         <div className='flex w-full flex-1 flex-row gap-4'>
@@ -63,13 +70,17 @@ function ThreadCard({
           </div>
 
           <div className='flex w-full flex-col'>
-            <Link href={`/profile/${author.id}`} className='w-fit'>
-              <h4 className='cursor-pointer text-base-semibold text-light-1'>
-                {author.name}
-              </h4>
-            </Link>
+            <div className="flex ">
+              <Link href={`/profile/${author.id}`} className='w-fit mr-4'>
+                <h4 className='cursor-pointer text-base-semibold text-light-1'>
+                  {author.name}
+                </h4>
+              </Link>
+              <p className="flex text-slate-600">{`${hour}:${minutes}  ${day}/${month}/${year}`}</p>
+            </div>
 
-            <p className='mt-2 text-small-regular text-light-2'>{content}</p>
+
+            <p className='mt-2 text-small-regular text-light-2 max-h-80 overflow-auto OWNBAR p-1'>{content}</p>
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
@@ -119,7 +130,7 @@ function ThreadCard({
         {/* <DeleteThread
           threadId={JSON.stringify(id)}
           currentUserId={currentUserId}
-        //   authorId={author.id}
+          authorId={author.id}
           parentId={parentId}
           isComment={isComment}
         /> */}
