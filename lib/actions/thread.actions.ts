@@ -43,21 +43,31 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   return { posts, isNext };
 }
 
+interface Inputs {
+  imgUrl?: string;
+  videoUrl?: string;
+  // Add other fields/types as needed
+}
+
 interface Params {
   text: string,
   author: string,
   path: string,
+  imgUrl: Inputs
 }
 
-export async function createThread({ text, author, path }: Params
+export async function createThread({ text, author, path, imgUrl }: Params
 ) {
   try {
     connectToDB();
-
+    console.log('tesf', text)
+    console.log('dfdsf', imgUrl.imgUrl)
+    const imagen = imgUrl.imgUrl
 
     const createdThread = await Thread.create({
       text,
       author,
+      imgUrl: imagen,
     });
 
     // Update User model

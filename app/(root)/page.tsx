@@ -23,7 +23,6 @@ async function Home({
     30
   );
 
-  console.log('deer', result)
 
   return (
     <>
@@ -41,6 +40,7 @@ async function Home({
                 currentUserId={user.id}
                 parentId={post.parentId}
                 content={post.text}
+                imageH={post.imgUrl}
                 author={post.author}
                 community={post.community}
                 createdAt={post.createdAt}

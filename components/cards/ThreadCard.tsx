@@ -9,6 +9,7 @@ interface Props {
   currentUserId: string;
   parentId: string | null;
   content: string;
+  imageH: string;
   author: {
     name: string;
     image: string;
@@ -34,13 +35,14 @@ function ThreadCard({
   parentId,
   content,
   author,
+  imageH,
   community,
   createdAt,
   comments,
   isComment,
 }: Props) {
 
-  console.log('oso', author)
+  console.log('ss', imageH)
   const createdAtDate = new Date(createdAt);
   const year = createdAtDate.getFullYear();
   const month = createdAtDate.getMonth() + 1; // Adding 1 as getMonth() returns a zero-based index
@@ -82,6 +84,12 @@ function ThreadCard({
 
             <p className='mt-2 text-small-regular text-light-2 max-h-80 overflow-auto OWNBAR p-1'>{content}</p>
 
+            {imageH && (
+              <div className="w-full flex justify-center">
+                <img src={imageH} width={500}  alt="" />
+              </div>
+            )}
+
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
                 <Image
@@ -100,7 +108,7 @@ function ThreadCard({
                     className='cursor-pointer object-contain'
                   />
                 </Link>
-                <Image
+                {/* <Image
                   src='/assets/repost.svg'
                   alt='heart'
                   width={24}
@@ -113,7 +121,7 @@ function ThreadCard({
                   width={24}
                   height={24}
                   className='cursor-pointer object-contain'
-                />
+                /> */}
               </div>
 
               {isComment && comments.length > 0 && (
