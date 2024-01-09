@@ -1,5 +1,5 @@
 'use client'
-import { FormEvent, useEffect, useState, ChangeEvent } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import {
     getStorage,
     ref,
@@ -7,7 +7,6 @@ import {
     getDownloadURL,
 } from "firebase/storage";
 import app from "@/firebase";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 
 interface Inputs {
