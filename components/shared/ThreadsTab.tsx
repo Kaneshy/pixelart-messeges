@@ -12,6 +12,7 @@ interface Result {
     _id: string;
     text: string;
     parentId: string | null;
+    likes: [string],
     imgUrl: string,
     author: {
       name: string;
@@ -52,6 +53,7 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
       {result.threads.map((thread) => (
         <ThreadCard
           key={thread._id}
+          likes={thread.likes}
           id={thread._id}
           currentUserId={currentUserId}
           parentId={thread.parentId}
