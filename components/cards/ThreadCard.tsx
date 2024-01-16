@@ -9,6 +9,7 @@ import { FaRegCommentDots } from "react-icons/fa";
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
 import Like from "../functionalities/Like";
+import Follow from "../functionalities/Follow";
 
 interface Props {
   id: string;
@@ -20,6 +21,7 @@ interface Props {
     name: string;
     image: string;
     id: string;
+    _id:string
   };
   community: {
     id: string;
@@ -33,7 +35,8 @@ interface Props {
     };
   }[];
   isComment?: boolean;
-  likes: [string]
+  likes: [string];
+  followed: [string]
 }
 
 async function ThreadCard({
@@ -48,6 +51,7 @@ async function ThreadCard({
   comments,
   isComment,
   likes,
+  followed
 }: Props) {
 
   // console.log('ss', imageH)
@@ -59,12 +63,12 @@ async function ThreadCard({
   const minutes = createdAtDate.getMinutes();
 
 
-
   const user = await currentUser();
   if (!user) redirect("/onboarding");
 
   const userInfo = await fetchUser(user.id);
-  if (!userInfo?.onboarded) redirect("/onboarding");
+  if (!userInfo?.onboarded) redirect("/onboarding");  
+
 
   return (
     <article
@@ -93,7 +97,12 @@ async function ThreadCard({
                   {author.name}
                 </h4>
               </Link>
-              <p className="flex text-slate-600">{`${hour}:${minutes}  ${day}/${month}/${year}`}</p>
+              <Follow
+                  currentUserId={JSON.stringify(userInfo._id)}
+                  authorId={JSON.stringify(author._id)}
+                  followed={followed}
+                />
+              <p className="flex text-small-semibold text-slate-600">{`${hour}:${minutes}  ${day}/${month}/${year}`}</p>
             </div>
 
 

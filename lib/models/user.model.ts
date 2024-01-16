@@ -32,6 +32,14 @@ const userSchema = new mongoose.Schema({
       ref: "Community",
     },
   ],
+  followers: {
+    type: [String],
+    default: []
+  },
+  followed: {
+    type: [String],
+    default: []
+  }
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

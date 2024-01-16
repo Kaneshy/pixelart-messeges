@@ -235,7 +235,7 @@ export async function likeThread({ threadCurrentId, threadCurrentUser, path }: L
     const test1 = JSON.parse(threadCurrentId)
     const test2 = JSON.parse(threadCurrentUser)
 
-    const originalThread = await Thread.findByIdAndUpdate(test1,{
+    const originalThread = await Thread.findByIdAndUpdate(test1, {
       $addToSet: { likes: test2 },
     }, { new: true })
     console.log(originalThread)
@@ -254,8 +254,8 @@ export async function dislikeThread({ threadCurrentId, threadCurrentUser, path }
     const test1 = JSON.parse(threadCurrentId)
     const test2 = JSON.parse(threadCurrentUser)
 
-    const originalThread = await Thread.findByIdAndUpdate(test1,{
-      $pull:{likes:test2}
+    const originalThread = await Thread.findByIdAndUpdate(test1, {
+      $pull: { likes: test2 }
     }, { new: true })
     console.log(originalThread)
 
@@ -265,3 +265,4 @@ export async function dislikeThread({ threadCurrentId, threadCurrentUser, path }
     console.log(error.message);
   }
 }
+

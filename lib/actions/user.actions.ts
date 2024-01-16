@@ -178,3 +178,55 @@ export async function getActivity(userId: string) {
     throw error;
   }
 }
+
+
+interface LikeParams {
+  threadAuthorId: string,
+  threadCurrentUser: string,
+  path: string,
+}
+
+
+export async function followUser({ threadAuthorId, threadCurrentUser, path }: LikeParams) {
+
+  try {
+    connectToDB()
+    const test1 = JSON.parse(threadAuthorId)
+    const test2 = JSON.parse(threadCurrentUser)
+
+    await User.findByIdAndUpdate(test1, {
+      $addToSet: { followers: test2 }
+    }, { new: true })
+
+    await User.findByIdAndUpdate(test2, {
+      $addToSet: { followed: test1 }
+    }, { new: true })
+
+    revalidatePath(path);
+
+  } catch (error: any) {
+    console.log(error.message);
+  }
+}
+
+export async function unfollowUser({ threadAuthorId, threadCurrentUser, path }: LikeParams) {
+
+  try {
+    connectToDB()
+    const test1 = JSON.parse(threadAuthorId)
+    const test2 = JSON.parse(threadCurrentUser)
+
+    await User.findByIdAndUpdate(test1, {
+      $pull: { followers: test2 }
+    }, { new: true })
+
+    await User.findByIdAndUpdate(test2, {
+      $pull: { followed: test1 }
+    }, { new: true })
+
+    revalidatePath(path);
+
+  } catch (error: any) {
+    console.log(error.message);
+  }
+}
