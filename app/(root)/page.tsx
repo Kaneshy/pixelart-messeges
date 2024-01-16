@@ -13,14 +13,15 @@ async function Home({
   searchParams: { [key: string]: string | undefined };
 }) {
   const user = await currentUser();
-  if (!user) return null;
+  if (!user) redirect("/onboarding");
 
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
+
   const result = await fetchPosts(
     searchParams.page ? +searchParams.page : 1,
-    30
+    7
   );
 
 
@@ -45,6 +46,7 @@ async function Home({
                 community={post.community}
                 createdAt={post.createdAt}
                 comments={post.children}
+                likes={post.likes}
               />
             ))}
           </>

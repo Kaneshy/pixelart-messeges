@@ -1,8 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { currentUser } from "@clerk/nextjs"
+import { redirect } from "next/navigation";
+import { fetchUser } from "@/lib/actions/user.actions";
+import { FaRegCommentDots } from "react-icons/fa";
+
 
 import { formatDateString } from "@/lib/utils";
 import DeleteThread from "../forms/DeleteThread";
+import Like from "../functionalities/Like";
 
 interface Props {
   id: string;
@@ -27,9 +33,10 @@ interface Props {
     };
   }[];
   isComment?: boolean;
+  likes: [string]
 }
 
-function ThreadCard({
+async function ThreadCard({
   id,
   currentUserId,
   parentId,
@@ -40,9 +47,10 @@ function ThreadCard({
   createdAt,
   comments,
   isComment,
+  likes,
 }: Props) {
 
-  console.log('ss', imageH)
+  // console.log('ss', imageH)
   const createdAtDate = new Date(createdAt);
   const year = createdAtDate.getFullYear();
   const month = createdAtDate.getMonth() + 1; // Adding 1 as getMonth() returns a zero-based index
@@ -50,7 +58,14 @@ function ThreadCard({
   const hour = createdAtDate.getHours();
   const minutes = createdAtDate.getMinutes();
 
-  
+
+
+  const user = await currentUser();
+  if (!user) redirect("/onboarding");
+
+  const userInfo = await fetchUser(user.id);
+  if (!userInfo?.onboarded) redirect("/onboarding");
+
   return (
     <article
       className={`flex w-full flex-col rounded-xl ${isComment ? "px-0 xs:px-7" : "bg-dark-2 p-7"
@@ -86,51 +101,34 @@ function ThreadCard({
 
             {imageH && (
               <div className="w-full flex justify-center">
-                <img src={imageH} width={500}  alt="" />
+                <img src={imageH} width={500} alt="" />
               </div>
             )}
 
             <div className={`${isComment && "mb-10"} mt-5 flex flex-col gap-3`}>
               <div className='flex gap-3.5'>
-                <Image
-                  src='/assets/heart-gray.svg'
-                  alt='heart'
-                  width={24}
-                  height={24}
-                  className='cursor-pointer object-contain'
+                <Like
+                  currentUserId={JSON.stringify(userInfo._id)}
+                  threadId={JSON.stringify(id)}
+                  likes={likes}
                 />
+
+
                 <Link href={`/thread/${id}`}>
-                  <Image
-                    src='/assets/reply.svg'
-                    alt='heart'
-                    width={24}
-                    height={24}
-                    className='cursor-pointer object-contain'
-                  />
+                  <FaRegCommentDots size={20} className='text-slate-600' />
                 </Link>
-                {/* <Image
-                  src='/assets/repost.svg'
-                  alt='heart'
-                  width={24}
-                  height={24}
-                  className='cursor-pointer object-contain'
-                />
-                <Image
-                  src='/assets/share.svg'
-                  alt='heart'
-                  width={24}
-                  height={24}
-                  className='cursor-pointer object-contain'
-                /> */}
+                <div>
+                  {isComment && comments.length > 0 && (
+                    <Link href={`/thread/${id}`}>
+                      <p className='mt-1 text-subtle-medium text-gray-1'>
+                        {comments.length} repl{comments.length > 1 ? "ies" : "y"}
+                      </p>
+                    </Link>
+                  )}
+                </div>
               </div>
 
-              {isComment && comments.length > 0 && (
-                <Link href={`/thread/${id}`}>
-                  <p className='mt-1 text-subtle-medium text-gray-1'>
-                    {comments.length} repl{comments.length > 1 ? "ies" : "y"}
-                  </p>
-                </Link>
-              )}
+
             </div>
           </div>
         </div>

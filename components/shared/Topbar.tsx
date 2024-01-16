@@ -15,8 +15,8 @@ const Topbar = () => {
         <p className='text-heading3-bold text-light-1 max-xs:hidden'>Social Pixel</p>
       </Link>
 
-      <div className='flex items-center gap-1'>
-        <Link href='/profile/edit' className='flex text-bold text-white px-2'>
+      <div className='flex items-center gap-x-2 '>
+        <Link href='/profile/edit' className='flex text-bold text-neutral-300 text-base-regular '>
           <Editprofile/>
         </Link>
         <div className='block md:hidden'>

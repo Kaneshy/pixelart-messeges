@@ -6,6 +6,7 @@ import { connectToDB } from "../mongoose";
 
 import User from "../models/user.model";
 import Thread from "../models/thread.model";
+import mongoose from 'mongoose';
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   connectToDB();
@@ -53,8 +54,10 @@ interface Params {
   text: string,
   author: string,
   path: string,
-  imgUrl: Inputs
+  imgUrl: Inputs,
 }
+
+
 
 export async function createThread({ text, author, path, imgUrl }: Params
 ) {
@@ -69,6 +72,8 @@ export async function createThread({ text, author, path, imgUrl }: Params
       author,
       imgUrl: imagen,
     });
+
+    console.log('df', typeof createdThread._id)
 
     // Update User model
     await User.findByIdAndUpdate(author, {
@@ -213,5 +218,50 @@ export async function addCommentToThread(
   } catch (err) {
     console.error("Error while adding comment:", err);
     throw new Error("Unable to add comment");
+  }
+}
+
+interface LikeParams {
+  threadCurrentId: string,
+  threadCurrentUser: string,
+  path: string,
+}
+
+
+export async function likeThread({ threadCurrentId, threadCurrentUser, path }: LikeParams) {
+
+  try {
+    connectToDB()
+    const test1 = JSON.parse(threadCurrentId)
+    const test2 = JSON.parse(threadCurrentUser)
+
+    const originalThread = await Thread.findByIdAndUpdate(test1,{
+      $addToSet: { likes: test2 },
+    }, { new: true })
+    console.log(originalThread)
+
+
+    revalidatePath(path);
+  } catch (error: any) {
+    console.log(error.message);
+  }
+}
+
+export async function dislikeThread({ threadCurrentId, threadCurrentUser, path }: LikeParams) {
+
+  try {
+    connectToDB()
+    const test1 = JSON.parse(threadCurrentId)
+    const test2 = JSON.parse(threadCurrentUser)
+
+    const originalThread = await Thread.findByIdAndUpdate(test1,{
+      $pull:{likes:test2}
+    }, { new: true })
+    console.log(originalThread)
+
+
+    revalidatePath(path);
+  } catch (error: any) {
+    console.log(error.message);
   }
 }
