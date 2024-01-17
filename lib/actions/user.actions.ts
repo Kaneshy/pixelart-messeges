@@ -193,6 +193,7 @@ export async function followUser({ threadAuthorId, threadCurrentUser, path }: Li
     connectToDB()
     const test1 = JSON.parse(threadAuthorId)
     const test2 = JSON.parse(threadCurrentUser)
+    console.log('threadAuthorId', test1)
 
     await User.findByIdAndUpdate(test1, {
       $addToSet: { followers: test2 }

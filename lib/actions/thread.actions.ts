@@ -266,3 +266,31 @@ export async function dislikeThread({ threadCurrentId, threadCurrentUser, path }
   }
 }
 
+
+export async function fetchFollowingPost(userInfo: [string]) {
+  
+  try {
+    const usersFollowed = await User.find({ followers: { $in: userInfo } });
+    
+    const threads = await Thread.find({
+      author: {$in: usersFollowed},
+      parentId: { $in: [null, undefined] }
+    }).sort({ createdAt: -1 })
+    .populate({
+      path: "author",
+      model: User,
+    })
+    .populate({
+      path: "children", // Populate the children field
+      populate: {
+        path: "author", // Populate the author field within children
+        model: User,
+        select: "_id name parentId image", // Select only _id and username fields of the author
+      },
+    });
+    return threads
+  } catch (err) {
+    console.log('err', err)
+  }
+}
+

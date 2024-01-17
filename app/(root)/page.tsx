@@ -23,6 +23,8 @@ async function Home({
     20
   );
 
+  console.log('ggg', result.posts[0])
+
 
   return (
     <>
