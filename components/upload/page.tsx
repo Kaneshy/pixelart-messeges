@@ -108,19 +108,25 @@ const UploadProductsPage = ({ onDataSubmit }: UploadProductsPageProps) => {
                 <h1 className='text-center border-b border-neutral-500    font-bold text-2xl text-white border-a1 pb-2 mb-6 '>Upload your video </h1>
 
 
-                <div className="mb-4">
+                <div className="mb-4 flex flex-col gap-y-4">
                     <label htmlFor="thumbnail" className=" text-gray-400 justify-around gap-x-2 font-bold mb-2 flex  ">
                         <p className="text-small-semibold"> Select thumbnail here</p>
                         <div className="bg-blue-2 text-small-semibold bg-blue text-white p-2 rounded-xl hover:scale-105 transition-transform transform  ">Select form computer</div>
                     </label>
-                    {imgPerc > 0 ? ('Uploading ' + imgPerc + '%') : (
+                    {imgPerc > 0 ? (
+                        <div className="w-full text-tiny-medium text-gray-200 bg-gray-600 rounded-full ">
+                            <div className="bg-blue text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style={{ width: imgPerc + '%' }}> {imgPerc}%</div>
+                        </div>
+                    ) : (
                         <input type="file" id="thumbnail" onChange={handleImgChange} className="border-gray-300 hidden" />
                     )}
+
+                    <div className="w-full flex ">
+                        <img className="object-contain w-full " src={inputs.imgUrl} alt="" />
+                    </div>
                 </div>
 
-                <div className="max-h-96 flex ">
-                    <img className="object-contain "  src={inputs.imgUrl} alt="" />
-                </div>
+
                 {/* <button
 
                     className="bg-blue-1 w-full hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
