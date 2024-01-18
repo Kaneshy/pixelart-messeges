@@ -288,6 +288,7 @@ export async function fetchFollowingPost(userInfo: [string]) {
         select: "_id name parentId image", // Select only _id and username fields of the author
       },
     });
+
     return threads
   } catch (err) {
     console.log('err', err)

@@ -10,6 +10,7 @@ interface Result {
   name: string;
   image: string;
   id: string;
+  _id:string
   followed: [string];
   threads: {
     _id: string;
@@ -47,12 +48,21 @@ interface Props {
 
 async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
   let result: Result;
-
     result = await fetchUserPosts(accountId);
+
+    const newAuthor = {
+      name: result.name,
+      image:  result.image,
+      id:  result.id,
+      _id: result._id
+    }
+
 
     const user = await currentUser();
     if (!user) return null;
-  
+
+    // console.log(result, 'fdfdfd')
+
     const userInfo = await fetchUser(user.id);
     if (!userInfo?.onboarded) redirect("/onboarding");
 
@@ -71,7 +81,7 @@ async function ThreadsTab({ currentUserId, accountId, accountType }: Props) {
           parentId={thread.parentId}
           content={thread.text}
           imageH={thread.imgUrl}
-          author={thread.author}
+          author={newAuthor}
           community={
             accountType === "Community"
               ? { name: result.name, id: result.id, image: result.image }

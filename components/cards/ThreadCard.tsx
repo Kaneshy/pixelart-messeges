@@ -91,7 +91,7 @@ async function ThreadCard({
           </div>
 
           <div className='flex w-full flex-col'>
-            <div className="flex ">
+            <div className="flex i items-center">
               <Link href={`/profile/${author.id}`} className='w-fit mr-4'>
                 <h4 className='cursor-pointer text-base-semibold text-light-1'>
                   {author.name}

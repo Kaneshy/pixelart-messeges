@@ -68,9 +68,9 @@ export async function updateUser({
 export async function fetchUserPosts(userId: string) {
   try {
     connectToDB();
-
     // Find all threads authored by the user with the given userId
-    const threads = await User.findOne({ id: userId }).populate({
+    const threads = await User.findOne({ id: userId })
+    .populate({
       path: "threads",
       model: Thread,
       populate: [
@@ -84,7 +84,8 @@ export async function fetchUserPosts(userId: string) {
           },
         },
       ],
-    });
+    })
+    .sort({ createdAt: -1 })
     return threads;
   } catch (error) {
     console.error("Error fetching user threads:", error);

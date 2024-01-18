@@ -19,7 +19,7 @@ const page = async () => {
 
     const threads = await fetchFollowingPost(userInfo._id);
 
-    console.log('sss', threads && threads[0])
+    console.log(threads && threads[0])
 
   return (
     <>
